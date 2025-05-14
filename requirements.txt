@@ -5,3 +5,4 @@ sentence-transformers
 chromadb
 pypdf
 pycryptodome
+protobuf==3.20.3
