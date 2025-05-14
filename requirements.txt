@@ -5,3 +5,4 @@ sentence-transformers
 pypdf
 tiktoken
 faiss-cpu
+langchain_community
