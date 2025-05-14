@@ -1,11 +1,12 @@
-
 from pathlib import Path
 import shutil
+import streamlit as st
+
 from langchain_community.document_loaders import PyPDFLoader
+from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain.vectorstores import Chroma
-import streamlit as st
 
 # Setup directories
 UPLOAD_DIR = Path("uploads")
@@ -15,21 +16,22 @@ VECTOR_STORE_DIR = "brahvi_chroma"
 # Load embedding model
 embedding_model = SentenceTransformerEmbeddings(model_name="sentence-transformers/distiluse-base-multilingual-cased")
 
-# Process PDF and store vectors
-from langchain.document_loaders import PyPDFLoader
-
+# Function to process and store PDF content
 def process_pdf(file_path):
-    loader = PyPDFLoader(file_path)
+    loader = PyPDFLoader(str(file_path))
     pages = loader.load()
     texts = [Document(page_content=page.page_content) for page in pages]
-    db = Chroma.from_documents(texts, embedding_model, persist_directory=VECTOR_DB_DIR)
+
+    # Split into chunks for better embedding
+    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+    chunks = splitter.split_documents(texts)
+
+    # Store in vector DB
+    db = Chroma.from_documents(chunks, embedding_model, persist_directory=VECTOR_STORE_DIR)
     db.persist()
-    return texts
+    return len(chunks)
 
-
-
-
-# Query the vector store
+# Function to query stored knowledge
 def query_model(question):
     db = Chroma(persist_directory=VECTOR_STORE_DIR, embedding_function=embedding_model)
     results = db.similarity_search(question, k=3)
@@ -46,9 +48,9 @@ if uploaded_file:
     file_path = UPLOAD_DIR / uploaded_file.name
     with open(file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
-    with st.spinner("🔄 Processing..."):
-        chunks = process_pdf(file_path)
-    st.success(f"✅ Added {chunks} chunks to the knowledge base.")
+    with st.spinner("🔄 Processing book..."):
+        chunk_count = process_pdf(file_path)
+    st.success(f"✅ Processed and stored {chunk_count} chunks in the knowledge base.")
 
 # Ask question
 question = st.text_input("💬 Ask a question:")
