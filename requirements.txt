@@ -6,3 +6,6 @@ chromadb[all]  # ✅ add [all] to pull server dependencies
 pypdf
 pycryptodome
 protobuf==3.20.3  # ✅ fix compatibility issue
+langchain
+chromadb
+streamlit
