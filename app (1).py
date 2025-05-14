@@ -6,7 +6,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import SentenceTransformerEmbeddings
-from langchain.vectorstores import Chroma
+from langchain.vectorstores import FAISS
 
 # Setup directories
 UPLOAD_DIR = Path("uploads")
