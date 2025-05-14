@@ -1,5 +1,7 @@
 streamlit
-langchain
-chromadb
+langchain>=0.1.14
+chromadb>=0.4.24
 sentence-transformers
 pypdf
+tiktoken
+faiss-cpu
