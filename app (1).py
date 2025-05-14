@@ -41,7 +41,7 @@ uploaded_file = st.file_uploader("📤 Upload a Brahui Book (PDF)", type=["pdf"]
 if uploaded_file:
     file_path = UPLOAD_DIR / uploaded_file.name
     with open(file_path, "wb") as f:
-    f.write(uploaded_file.getbuffer())
+        f.write(uploaded_file.getbuffer())
     with st.spinner("🔄 Processing..."):
         chunks = process_pdf(file_path)
     st.success(f"✅ Added {chunks} chunks to the knowledge base.")
