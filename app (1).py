@@ -21,10 +21,15 @@ from langchain.schema import Document
 def process_pdf(file_path):
     loader = PyPDFLoader(file_path)
     pages = loader.load()
-    texts = [Document(page.content) for page in pages]  # ✅ wrap in Document
+
+    # ✅ Wrap each page with Document correctly
+    texts = [Document(page_content=page.page_content) for page in pages]
+
+    # Create vector store
     db = Chroma.from_documents(texts, embedding_model, persist_directory=VECTOR_DB_DIR)
     db.persist()
     return texts
+
 
 
 # Query the vector store
