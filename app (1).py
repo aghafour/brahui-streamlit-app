@@ -16,14 +16,16 @@ VECTOR_STORE_DIR = "brahvi_chroma"
 embedding_model = SentenceTransformerEmbeddings(model_name="sentence-transformers/distiluse-base-multilingual-cased")
 
 # Process PDF and store vectors
+from langchain.schema import Document
+
 def process_pdf(file_path):
-    loader = PyPDFLoader(str(file_path))
+    loader = PyPDFLoader(file_path)
     pages = loader.load()
-    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-    texts = splitter.split_documents(pages)
-    db = Chroma.from_documents(texts, embedding_model, persist_directory=VECTOR_STORE_DIR)
+    texts = [Document(page.content) for page in pages]  # ✅ wrap in Document
+    db = Chroma.from_documents(texts, embedding_model, persist_directory=VECTOR_DB_DIR)
     db.persist()
-    return len(texts)
+    return texts
+
 
 # Query the vector store
 def query_model(question):
