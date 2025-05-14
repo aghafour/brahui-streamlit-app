@@ -9,3 +9,9 @@ protobuf==3.20.3  # ✅ fix compatibility issue
 langchain
 chromadb
 streamlit
+streamlit
+langchain
+langchain-community
+sentence-transformers
+faiss-cpu
+
