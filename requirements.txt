@@ -19,3 +19,6 @@ pypdf==3.17.0
 # 🔐 Crypto and Compatibility
 pycryptodome
 protobuf==3.20.3
+
+sentence-transformers
+
