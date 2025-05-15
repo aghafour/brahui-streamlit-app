@@ -5,9 +5,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings.huggingface import SentenceTransformerEmbeddings
-
-##from langchain.embeddings import SentenceTransformerEmbeddings
-from langchain_community.vectorstores import FAISS  # ✅ FIXED: Proper FAISS import
+from langchain_community.vectorstores import FAISS
 
 # Directories
 UPLOAD_DIR = Path("uploads")
@@ -15,13 +13,11 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 VECTOR_STORE_DIR = "brahvi_faiss_store"
 
 # Embedding model
-##embedding_model = SentenceTransformerEmbeddings(
-  ##  model_name="sentence-transformers/distiluse-base-multilingual-cased"
-##)
-embedding_model = SentenceTransformerEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embedding_model = SentenceTransformerEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
 
-
-# Function: Process PDF and store vectors
+# Process PDF and store vectors
 def process_pdf(file_path):
     try:
         loader = PyPDFLoader(str(file_path))
@@ -39,9 +35,14 @@ def process_pdf(file_path):
         st.error(f"❌ Error processing PDF: {e}")
         return 0
 
-# Function: Answer questions from stored knowledge
+# Answer questions from stored knowledge
 def query_model(question):
     try:
+        # Check if vector store folder exists
+        if not Path(VECTOR_STORE_DIR).exists():
+            st.warning("No vector store found. Please upload and process a PDF first.")
+            return ""
+
         db = FAISS.load_local(VECTOR_STORE_DIR, embedding_model)
         results = db.similarity_search(question, k=3)
         return "\n\n---\n\n".join([doc.page_content for doc in results])
