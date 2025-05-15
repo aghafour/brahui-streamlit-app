@@ -5,6 +5,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
+
 from langchain_community.vectorstores import FAISS
 
 # Directories
@@ -13,7 +14,7 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 VECTOR_STORE_DIR = Path("brahvi_faiss_store")
 
 # Embedding model initialization
-embedding_model = SentenceTransformerEmbeddings(
+embedding_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
