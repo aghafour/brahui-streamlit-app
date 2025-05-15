@@ -14,4 +14,14 @@ langchain
 langchain-community
 sentence-transformers
 faiss-cpu
+streamlit
+langchain==0.1.14
+langchain-community==0.0.28
+sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+chromadb[all]==0.4.24
+pypdf==3.17.0
+pycryptodome
+protobuf==3.20.3
+torch==2.1.2
 
