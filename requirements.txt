@@ -1,23 +1,11 @@
-# Streamlit App
 streamlit==1.33.0
-
-# LangChain Core
 langchain==0.1.14
-langchain-community==0.0.30
-
-# Embeddings
+langchain-community>=0.0.30,<0.1
 sentence-transformers==2.2.2
-transformers==4.40.1
 torch==2.2.2
-
-# Vector Store
-chromadb==0.4.24
-
-# PDF Handling
+transformers>=4.30.0
+chromadb[duckdb]
+chromadb[all]==0.4.24
 pypdf==3.17.0
-
-# Crypto
-pycryptodome==3.20.0
-
-# Compatibility
+pycryptodome
 protobuf==3.20.3
