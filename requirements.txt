@@ -3,11 +3,11 @@ streamlit==1.33.0
 
 # 📚 LangChain and Ecosystem
 langchain==0.1.14
-langchain-community==0.0.28
+langchain-community>=0.0.30,<0.1
 
 # 🤖 Embedding & Language Models
 sentence-transformers==2.2.2
-torch==2.1.2
+torch==2.2.2
 
 # 🧠 Vector Store
 faiss-cpu==1.7.4
