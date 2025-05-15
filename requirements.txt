@@ -1,20 +1,11 @@
-# 🖥 Core App
 streamlit==1.33.0
-
-# 📚 LangChain and Ecosystem
 langchain==0.1.14
 langchain-community>=0.0.30,<0.1
-
-# 🤖 Embedding & Language Models
 sentence-transformers==2.2.2
 torch==2.2.2
-
-# 🧠 Vector Store
+transformers>=4.30.0
+chromadb[duckdb]
 chromadb[all]==0.4.24
-
-# 📄 PDF Handling
 pypdf==3.17.0
-
-# 🔐 Crypto and Compatibility
 pycryptodome
 protobuf==3.20.3
