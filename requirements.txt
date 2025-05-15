@@ -4,7 +4,7 @@ langchain-community>=0.0.30,<0.1
 sentence-transformers==2.2.2
 torch==2.2.2
 transformers>=4.30.0
-chromadb[duckdb]
+chromadb[duckdb]==0.4.24
 chromadb[all]==0.4.24
 pypdf==3.17.0
 pycryptodome
