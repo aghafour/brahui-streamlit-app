@@ -10,7 +10,7 @@ sentence-transformers==2.2.2
 torch==2.2.2
 
 # 🧠 Vector Store
-faiss-cpu==1.7.4
+chromadb[duckdb]
 chromadb[all]==0.4.24
 
 # 📄 PDF Handling
