@@ -4,7 +4,9 @@ import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import SentenceTransformerEmbeddings
+from langchain_community.embeddings.huggingface import SentenceTransformerEmbeddings
+
+##from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain_community.vectorstores import FAISS  # ✅ FIXED: Proper FAISS import
 
 # Directories
