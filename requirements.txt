@@ -10,7 +10,6 @@ sentence-transformers==2.2.2
 torch==2.2.2
 
 # 🧠 Vector Store
-chromadb[duckdb]
 chromadb[all]==0.4.24
 
 # 📄 PDF Handling
@@ -19,6 +18,3 @@ pypdf==3.17.0
 # 🔐 Crypto and Compatibility
 pycryptodome
 protobuf==3.20.3
-
-sentence-transformers
-
