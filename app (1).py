@@ -15,9 +15,11 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 VECTOR_STORE_DIR = "brahvi_faiss_store"
 
 # Embedding model
-embedding_model = SentenceTransformerEmbeddings(
-    model_name="sentence-transformers/distiluse-base-multilingual-cased"
-)
+##embedding_model = SentenceTransformerEmbeddings(
+  ##  model_name="sentence-transformers/distiluse-base-multilingual-cased"
+##)
+embedding_model = SentenceTransformerEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
 
 # Function: Process PDF and store vectors
 def process_pdf(file_path):
