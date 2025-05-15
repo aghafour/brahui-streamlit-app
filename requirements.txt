@@ -1,27 +1,21 @@
-streamlit
-langchain
-langchain-community
-sentence-transformers
-chromadb[all]  # ✅ add [all] to pull server dependencies
-pypdf
-pycryptodome
-protobuf==3.20.3  # ✅ fix compatibility issue
-langchain
-chromadb
-streamlit
-streamlit
-langchain
-langchain-community
-sentence-transformers
-faiss-cpu
-streamlit
+# 🖥 Core App
+streamlit==1.33.0
+
+# 📚 LangChain and Ecosystem
 langchain==0.1.14
 langchain-community==0.0.28
+
+# 🤖 Embedding & Language Models
 sentence-transformers==2.2.2
-faiss-cpu==1.7.4
-chromadb[all]==0.4.24
-pypdf==3.17.0
-pycryptodome
-protobuf==3.20.3
 torch==2.1.2
 
+# 🧠 Vector Store
+faiss-cpu==1.7.4
+chromadb[all]==0.4.24
+
+# 📄 PDF Handling
+pypdf==3.17.0
+
+# 🔐 Crypto and Compatibility
+pycryptodome
+protobuf==3.20.3
