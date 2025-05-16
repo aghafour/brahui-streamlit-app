@@ -17,7 +17,7 @@ embedding_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-# Process PDF and store vectors
+# Function to process PDF and store embeddings
 def process_pdf(file_path):
     try:
         loader = PyPDFLoader(str(file_path))
@@ -35,26 +35,29 @@ def process_pdf(file_path):
         st.error(f"❌ Error processing PDF: {e}")
         return 0
 
-# Answer questions from stored knowledge
+# Function to query the model
 def query_model(question):
     try:
         if not Path(VECTOR_STORE_DIR).exists():
-            st.warning("No vector store found. Please upload and process a PDF first.")
+            st.warning("⚠️ Please upload and process a PDF first.")
             return ""
 
         db = FAISS.load_local(VECTOR_STORE_DIR, embedding_model)
         results = db.similarity_search(question, k=3)
+
+        if not results:
+            return "❌ No relevant answer found."
         return "\n\n---\n\n".join([doc.page_content for doc in results])
     except Exception as e:
         st.error(f"❌ Error querying model: {e}")
         return ""
 
-# Streamlit UI
+# Streamlit UI setup
 st.set_page_config(page_title="📘 Brahui Book Learner", layout="centered")
 st.title("📚 Brahui Language Learning App")
 st.write("Upload a Brahui PDF book and ask questions in any language.")
 
-# Upload Section
+# Upload PDF section
 uploaded_file = st.file_uploader("📤 Upload a Brahui Book (PDF)", type=["pdf"])
 if uploaded_file:
     file_path = UPLOAD_DIR / uploaded_file.name
@@ -65,14 +68,12 @@ if uploaded_file:
     if chunks > 0:
         st.success(f"✅ Stored {chunks} chunks successfully!")
 
-# QA Section
-from langchain.vectorstores import Chroma
-
-def query_model(question):
-    db = Chroma(
-        persist_directory=VECTOR_STORE_DIR,
-        embedding_function=embedding_model,
-        allow_dangerous_deserialization=True  # ✅ Add this line
-    )
-    results = db.similarity_search(question, k=3)
-    return "\n\n---\n\n".join([doc.page_content for doc in results])
+# Ask a question section
+st.markdown("---")
+st.subheader("💬 Ask a Question From the Uploaded Book")
+question = st.text_input("Type your question here:")
+if st.button("Ask") and question:
+    with st.spinner("🧠 Thinking..."):
+        answer = query_model(question)
+    st.markdown("### 📖 Answer:")
+    st.write(answer)
