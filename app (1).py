@@ -66,9 +66,13 @@ if uploaded_file:
         st.success(f"✅ Stored {chunks} chunks successfully!")
 
 # QA Section
-question = st.text_input("💬 Ask a question:")
-if st.button("Ask") and question:
-    with st.spinner("🧠 Searching..."):
-        response = query_model(question)
-    st.markdown("### 📖 Answer:")
-    st.write(response if response else "❌ No relevant information found.")
+from langchain.vectorstores import Chroma
+
+def query_model(question):
+    db = Chroma(
+        persist_directory=VECTOR_STORE_DIR,
+        embedding_function=embedding_model,
+        allow_dangerous_deserialization=True  # ✅ Add this line
+    )
+    results = db.similarity_search(question, k=3)
+    return "\n\n---\n\n".join([doc.page_content for doc in results])
