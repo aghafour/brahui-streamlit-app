@@ -4,4 +4,4 @@ langchain-community
 sentence-transformers
 faiss-cpu
 pypdf
-
+cryptography>=3.1
