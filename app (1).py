@@ -69,11 +69,23 @@ if uploaded_file:
         st.success(f"✅ Stored {chunks} chunks successfully!")
 
 # Ask a question section
-st.markdown("---")
-st.subheader("💬 Ask a Question From the Uploaded Book")
-question = st.text_input("Type your question here:")
-if st.button("Ask") and question:
-    with st.spinner("🧠 Thinking..."):
-        answer = query_model(question)
-    st.markdown("### 📖 Answer:")
-    st.write(answer)
+def query_model(question):
+    try:
+        if not Path(VECTOR_STORE_DIR).exists():
+            st.warning("⚠️ Please upload and process a PDF first.")
+            return ""
+
+        db = FAISS.load_local(
+            VECTOR_STORE_DIR,
+            embedding_model,
+            allow_dangerous_deserialization=True  # 👈 Required fix
+        )
+        results = db.similarity_search(question, k=3)
+
+        if not results:
+            return "❌ No relevant answer found."
+        return "\n\n---\n\n".join([doc.page_content for doc in results])
+    except Exception as e:
+        st.error(f"❌ Error querying model: {e}")
+        return ""
+
