@@ -14,9 +14,12 @@ VECTOR_STORE_DIR = Path("brahvi_faiss_store")
 VECTOR_STORE_DIR.mkdir(parents=True, exist_ok=True)
 
 # Embedding model
+from sentence_transformers import SentenceTransformer
+
 embedding_model = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
+    model=SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 )
+
 
 # Function to process PDF and append to vector store
 def process_pdf(file_path):
