@@ -1,7 +1,7 @@
 from pathlib import Path
 import streamlit as st
 
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
