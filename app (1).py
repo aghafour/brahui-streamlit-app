@@ -42,7 +42,11 @@ def query_model(question):
             st.warning("⚠️ Please upload and process a PDF first.")
             return ""
 
-        db = FAISS.load_local(VECTOR_STORE_DIR, embedding_model)
+        db = FAISS.load_local(
+            VECTOR_STORE_DIR,
+            embedding_model,
+            allow_dangerous_deserialization=True  # Required for newer LangChain
+        )
         results = db.similarity_search(question, k=3)
 
         if not results:
@@ -69,23 +73,12 @@ if uploaded_file:
         st.success(f"✅ Stored {chunks} chunks successfully!")
 
 # Ask a question section
-def query_model(question):
-    try:
-        if not Path(VECTOR_STORE_DIR).exists():
-            st.warning("⚠️ Please upload and process a PDF first.")
-            return ""
-
-        db = FAISS.load_local(
-            VECTOR_STORE_DIR,
-            embedding_model,
-            allow_dangerous_deserialization=True  # 👈 Required fix
-        )
-        results = db.similarity_search(question, k=3)
-
-        if not results:
-            return "❌ No relevant answer found."
-        return "\n\n---\n\n".join([doc.page_content for doc in results])
-    except Exception as e:
-        st.error(f"❌ Error querying model: {e}")
-        return ""
-
+st.subheader("❓ Ask a Question")
+user_question = st.text_input("Type your question here:")
+if st.button("Ask"):
+    if user_question.strip():
+        with st.spinner("🔍 Searching for answer..."):
+            answer = query_model(user_question)
+        st.markdown(f"### 📝 Answer:\n{answer}")
+    else:
+        st.warning("Please enter a question before submitting.")
