@@ -1,30 +1,32 @@
-# Streamlit for UI
+# 📦 Streamlit for frontend
 streamlit==1.32.2
 
-# LangChain core and community integrations
+# 🧠 LangChain core and community modules
 langchain==0.1.14
 langchain-community==0.0.31
 
-# Embedding models
+# 🔍 Embedding model + transformers
 sentence-transformers==2.2.2
 transformers==4.39.3
 torch==2.2.2
 accelerate==0.29.3
 
-# FAISS for vector store
+# 🔎 Vector store (FAISS)
 faiss-cpu==1.7.4
 
-# PDF loaders
-PyMuPDF==1.23.21  # Required for UnstructuredPDFLoader
-unstructured==0.12.6
-pdfminer.six==20221105
+# 📄 PDF parsing
+PyMuPDF==1.23.21         # For fast and accurate PDF loading
+pdfminer.six==20221105   # Required by unstructured
+unstructured==0.12.6     # Used by UnstructuredPDFLoader
 
-# Text parsing & splitting
+# 🔤 Tokenization & chunking
 tiktoken==0.5.2
 
-# Cryptography for secure PDF decryption
+# 🔐 For secure PDF decryption
 cryptography==42.0.5
 
-# Utility
+# ⚙️ Environment management (optional but useful)
 python-dotenv==1.0.1
 
+# 📚 Unicode & language processing (helps with Arabic/Roman script)
+regex==2023.12.25
