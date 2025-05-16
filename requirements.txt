@@ -30,3 +30,6 @@ python-dotenv==1.0.1
 
 # 📚 Unicode & language processing (helps with Arabic/Roman script)
 regex==2023.12.25
+
+# 🚨 Fix ImportError with huggingface_hub version
+huggingface_hub==0.25.2
